@@ -147,6 +147,25 @@ class TestCar(unittest.TestCase):
         car = CarFactory.create_thovex(current_date, last_service_date, current_mileage, last_service_mileage)
         self.assertTrue(car.needs_service())
 
+    def test_spindler_battery_needs_service(self):
+        today = date.today()
+        last_service_date = today.replace(year=today.year - 3)
+        current_date = today
+        battery = SpindlerBattery(last_service_date, current_date)
+        self.assertTrue(battery.needs_service())
+        
+    def test_carrigan_tires_needs_service(self):
+        # Test for Carrigan tires
+        tire_wear_array = [0.1, 0.2, 0.3, 0.9]
+        car = Car(CapuletEngine(0, 0), SpindlerBattery(date.today(), date.today()))
+        self.assertTrue(car.needs_tire_service(tire_wear_array))
+
+    def test_octoprime_tires_needs_service(self):
+        # Test for Octoprime tires
+        tire_wear_array = [0.7, 0.8, 0.9, 0.6]
+        car = Car(WilloughbyEngine(0, 0), SpindlerBattery(date.today(), date.today()))
+        self.assertTrue(car.needs_tire_service(tire_wear_array))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -70,6 +70,14 @@ class Car:
 
     def needs_service(self) -> bool:
         return self.engine.needs_service() or self.battery.needs_service()
+    
+    def needs_tire_service(self, tire_wear_array: list[float]) -> bool:
+        if isinstance(self.engine, CapuletEngine):
+            # Carrigan tires
+            return any(wear >= 0.9 for wear in tire_wear_array)
+        elif isinstance(self.engine, WilloughbyEngine):
+            # Octoprime tires
+            return sum(tire_wear_array)
 
 class CarFactory:
     @staticmethod
